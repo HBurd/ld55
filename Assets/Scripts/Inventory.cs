@@ -23,18 +23,24 @@ public class Inventory : MonoBehaviour
         {
             GameObject entry = Instantiate(inventory_entry, inventory_root);
             entry.transform.GetChild(0).GetComponent<Image>().sprite = sprite;
-            entry.SetActive(false);
+            entry.transform.GetChild(1).GetComponent<TMP_Text>().text = "0";
+            //entry.SetActive(false);
             item_counts.Add(0);
         }
     }
 
-    public void CollectItem(int item_type)
+    public void AdjustItem(int item_type, int adjustment)
     {
-        item_counts[item_type] += 1;
+        item_counts[item_type] += adjustment;
         if (item_counts[item_type] > 0)
         {
-            inventory_root.GetChild(item_type).gameObject.SetActive(true);
-            inventory_root.GetChild(item_type).GetChild(1).GetComponent<TMP_Text>().text = item_counts[item_type].ToString();
+            //inventory_root.GetChild(item_type).gameObject.SetActive(true);
         }
+        inventory_root.GetChild(item_type).GetChild(1).GetComponent<TMP_Text>().text = item_counts[item_type].ToString();
+    }
+
+    public int GetCount(int item_type)
+    {
+        return item_counts[item_type];
     }
 }
