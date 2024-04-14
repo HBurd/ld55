@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
@@ -9,6 +10,29 @@ public class Enemy : MonoBehaviour
 
     [SerializeField]
     float movement_speed;
+
+    [SerializeField]
+    float min_player_distance;
+
+    [SerializeField]
+    float range;
+
+    [SerializeField]
+    float projectile_speed;
+
+    [SerializeField]
+    double attack_cooldown;
+
+    [SerializeField]
+    double attack_windup_time;
+
+    [SerializeField]
+    double attack_stop_time;
+
+    // These are absolute
+    double next_attack_time;
+    double move_stop_time;
+    double actual_attack_time;  // i.e. after windup
 
     Transform player_tf;
 
@@ -19,6 +43,29 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        Vector3 player_distance = player_tf.position - transform.position;
+        float magnitude = player_distance.magnitude;
+        Debug.Log(magnitude);
 
+        if (Time.timeAsDouble > move_stop_time && magnitude > min_player_distance)
+        {
+            Vector3 velocity = player_distance.normalized * movement_speed;
+            transform.position += velocity * Time.deltaTime;
+        }
+        
+        if (magnitude < range && Time.timeAsDouble > next_attack_time)
+        {
+            next_attack_time = Time.timeAsDouble + attack_cooldown;
+            move_stop_time = Time.timeAsDouble + attack_stop_time;
+            actual_attack_time = Time.timeAsDouble + attack_windup_time;
+        }
+
+        if (Time.timeAsDouble > actual_attack_time)
+        {
+            actual_attack_time = double.MaxValue;
+            Projectile proj = Instantiate(projectile, transform.position, transform.rotation).GetComponent<Projectile>();
+            proj.SetVelocity(projectile_speed * player_distance.normalized);
+            proj.SetLifetime(range / projectile_speed);
+        }
     }
 }
