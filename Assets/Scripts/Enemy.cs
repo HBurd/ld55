@@ -45,7 +45,6 @@ public class Enemy : MonoBehaviour
     {
         Vector3 player_distance = player_tf.position - transform.position;
         float magnitude = player_distance.magnitude;
-        Debug.Log(magnitude);
 
         if (Time.timeAsDouble > move_stop_time && magnitude > min_player_distance)
         {

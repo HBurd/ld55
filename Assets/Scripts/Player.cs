@@ -12,6 +12,11 @@ public class Player : MonoBehaviour
     [SerializeField]
     float collect_radius;
 
+    [SerializeField]
+    GameObject rotating_summon;
+
+    int num_rotating_summons;
+
     void Update()
     {
         Vector3 velocity = Input.GetAxisRaw("Vertical") * Vector3.forward + Input.GetAxisRaw("Horizontal") * Vector3.right;
@@ -19,6 +24,13 @@ public class Player : MonoBehaviour
         velocity *= max_speed;
         transform.position += Time.deltaTime * velocity;
 
+        if (Input.GetButtonDown("Summon1"))
+        {
+            RotatingSummon summon = Instantiate(rotating_summon).GetComponent<RotatingSummon>();
+            summon.SetTarget(transform);
+            summon.SetIndex(num_rotating_summons);
+            num_rotating_summons += 1;
+        }
 
         Collider[] collectibles = Physics.OverlapSphere(transform.position, collect_radius, LayerMask.GetMask("Collectible"));
         foreach (Collider collectible in collectibles)

@@ -1475,6 +1475,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   max_speed: 2.5
   collect_radius: 0.5
+  rotating_summon: {fileID: 1870273827928101112, guid: 8908f9f11cd783b4cb6bd45822d46734,
+    type: 3}
 --- !u!114 &2062408061
 MonoBehaviour:
   m_ObjectHideFlags: 0
