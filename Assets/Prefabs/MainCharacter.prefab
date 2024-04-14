@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 859293037579108154}
   - component: {fileID: 7637060702442407200}
   - component: {fileID: 2317914927179281711}
+  - component: {fileID: 4568156244920977745}
   m_Layer: 0
   m_Name: MainCharacter
   m_TagString: Untagged
@@ -170,3 +171,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4568156244920977745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762057154555176704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a7cc5a0b80bbc84aa06e72e303ed2da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  max_speed: 2.5
+  collect_radius: 0.5
+  rotating_summon: {fileID: 1870273827928101112, guid: 8908f9f11cd783b4cb6bd45822d46734,
+    type: 3}
+  fixed_summon: {fileID: 6559048770751646833, guid: bded6aec6ca8e544bbe3b7572c9f2123,
+    type: 3}
+  fixed_summon_angle_rate: 180
+  fixed_summon_radius: 3
+  fixed_summon_indicator: {fileID: 0}

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5608747000257721056}
   - component: {fileID: -2037888554562242224}
   - component: {fileID: 3056870330909794261}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Muscle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

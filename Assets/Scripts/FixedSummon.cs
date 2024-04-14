@@ -7,6 +7,7 @@ public class FixedSummon : MonoBehaviour
 {
     Transform target;
     Vector3 offset;
+    Vector3 last_position;
 
     public void Init(Transform transform, float angle, float radius)
     {
@@ -19,5 +20,8 @@ public class FixedSummon : MonoBehaviour
     void Update()
     {
         transform.position = target.position + offset;
+        GetComponent<Animator>().SetBool("isWalking", transform.position != last_position);
+        GetComponent<Animator>().SetBool("isIdle", transform.position == last_position);
+        last_position = transform.position;
     }
 }

@@ -36,6 +36,10 @@ public class Player : MonoBehaviour
         velocity *= max_speed;
         transform.position += Time.deltaTime * velocity;
 
+        bool walking = velocity.magnitude > 0.01f;
+        GetComponent<Animator>().SetBool("isWalking", walking);
+        GetComponent<Animator>().SetBool("isIdle", !walking);
+
         if (Input.GetButtonDown("Summon1") && Singleton.Get<Inventory>().GetCount(0) > 0)
         {
             RotatingSummon summon = Instantiate(rotating_summon).GetComponent<RotatingSummon>();

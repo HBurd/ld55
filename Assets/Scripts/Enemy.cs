@@ -67,4 +67,12 @@ public class Enemy : MonoBehaviour
             proj.SetLifetime(range / projectile_speed);
         }
     }
+
+    //void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.gameObject.layer == LayerMask.NameToLayer("Muscle"))
+    //    {
+
+    //    }
+    //}
 }
