@@ -33,11 +33,12 @@ public class Enemy : MonoBehaviour
     double next_attack_time;
     double move_stop_time;
     double actual_attack_time;  // i.e. after windup
-
+    private SpriteRenderer sprite_renderer;
     Transform player_tf;
 
     void Start()
     {
+        sprite_renderer = GetComponent<SpriteRenderer>();
         player_tf = Singleton.GetPlayer().GetComponent<Transform>();
     }
 
@@ -50,8 +51,17 @@ public class Enemy : MonoBehaviour
         {
             Vector3 velocity = player_distance.normalized * movement_speed;
             transform.position += velocity * Time.deltaTime;
+
+            if (velocity.x > 0)
+            {
+                sprite_renderer.flipX = false;
+            }
+            else if (velocity.x < 0)
+            {
+                sprite_renderer.flipX = true;
+            }
         }
-        
+
         if (magnitude < range && Time.timeAsDouble > next_attack_time)
         {
             next_attack_time = Time.timeAsDouble + attack_cooldown;

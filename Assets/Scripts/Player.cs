@@ -19,6 +19,9 @@ public class Player : MonoBehaviour
     GameObject fixed_summon;
 
     [SerializeField]
+    GameObject floating_summon;
+
+    [SerializeField]
     float fixed_summon_angle_rate;
 
     [SerializeField]
@@ -27,10 +30,30 @@ public class Player : MonoBehaviour
     [SerializeField]
     Transform fixed_summon_indicator;
 
+    public Vector3 floating_summon_offset = new Vector3(0, 10, 0);
+
+    private GameObject flying_monke;
+    private Vector2 move_input;
+    private SpriteRenderer sprite_renderer;
     int num_rotating_summons;
+
+    void Start()
+    {
+        sprite_renderer = GetComponent<SpriteRenderer>();
+    }
 
     void Update()
     {
+        move_input.x = Input.GetAxisRaw("Horizontal");
+        move_input.y = Input.GetAxisRaw("Vertical");
+        if (move_input.x < 0)
+        {
+            sprite_renderer.flipX = true;
+        }
+        else if (move_input.x > 0)
+        {
+            sprite_renderer.flipX = false;
+        }
         Vector3 velocity = Input.GetAxisRaw("Vertical") * Vector3.forward + Input.GetAxisRaw("Horizontal") * Vector3.right;
         velocity = Vector3.ClampMagnitude(velocity, 1.0f) * max_speed;
         velocity *= max_speed;
@@ -72,6 +95,24 @@ public class Player : MonoBehaviour
             fixed_summon_indicator.gameObject.SetActive(false);
         }
 
+        if (Input.GetButtonDown("Summon3") && Singleton.Get<Inventory>().GetCount(2) > 0)
+        {
+            if (flying_monke == null)
+            {
+                flying_monke = Instantiate(floating_summon, transform.position + floating_summon_offset, Quaternion.identity);
+                Singleton.Get<Inventory>().AdjustItem(2, -1);
+            }
+            else
+            {
+                Singleton.Get<Inventory>().AdjustItem(2, -1);
+            }
+        }
+
+        if (flying_monke != null)
+        {
+            flying_monke.transform.position = transform.position + floating_summon_offset;
+        }
+
         Collider[] collectibles = Physics.OverlapSphere(transform.position, collect_radius, LayerMask.GetMask("Collectible"));
         foreach (Collider collectible in collectibles)
         {
@@ -80,4 +121,9 @@ public class Player : MonoBehaviour
             Destroy(collectible.gameObject);
         }
     }
+
+    // void LateUpdate()
+    // {
+    //     floating_summon.transform.position = transform.position + floating_summon_offset;
+    // }
 }
